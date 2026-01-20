@@ -56,46 +56,46 @@ Click **Export views...** to open the advanced export dialog. The tool remembers
 ## Example Outputs
 
 ### 6A27
-![6A27](images/example_6a27.png)
+![6A27](images/example_6a27_600dpi.png)
 
 ### 6A28
-![6A28](images/example_6a28.png)
+![6A28](images/example_6a28_600dpi.png)
 
 ### 6A29
-![6A29](images/example_6a29.png)
+![6A29](images/example_6a29_600dpi.png)
 
 ### 6BDU
-![6BDU](images/example_6bdu.png)
+![6BDU](images/example_6bdu_600dpi.png)
 
 ### 6MC6
-![6MC6](images/example_6mc6.png)
+![6MC6](images/example_6mc6_600dpi.png)
 
 ### 6MC8
-![6MC8](images/example_6mc8.png)
+![6MC8](images/example_6mc8_600dpi.png)
 
 ### 6NEO
-![6NEO](images/example_6neo.png)
+![6NEO](images/example_6neo_600dpi.png)
 
 ### 6O5L
-![6O5L](images/example_6o5l.png)
+![6O5L](images/example_6o5l_600dpi.png)
 
 ### 9OM8
-![9OM8](images/example_9om8.png)
+![9OM8](images/example_9om8_600dpi.png)
 
 ### 9OR6
-![9OR6](images/example_9or6.png)
+![9OR6](images/example_9or6_600dpi.png)
 
 ### 9Y6E
-![9Y6E](images/example_9y6e.png)
+![9Y6E](images/example_9y6e_600dpi.png)
 
 ### 9YI3
-![9YI3](images/example_9yi3.png)
+![9YI3](images/example_9yi3_600dpi.png)
 
 ### 9YL4
-![9YL4](images/example_9yl4.png)
+![9YL4](images/example_9yl4_600dpi.png)
 
 ### 9YUP
-![9YUP](images/example_9yup.png)
+![9YUP](images/example_9yup_600dpi.png)
 
 ---
 ## Credits
