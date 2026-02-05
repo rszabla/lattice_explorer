@@ -1052,6 +1052,7 @@ def launch_lattice_viewer():
     wrap_atoms_var = IntVar(value=1 if default_wrap_atoms else 0)
     show_model_var = IntVar(value=1)
     color_asu_var = IntVar(value=1 if default_color_asu_by_operator else 0)
+    color_scheme_var = StringVar(value='Pastel')
     show_grid_var = IntVar(value=1 if default_show_grid else 0)
     grid_point_size_var = StringVar(value=str(unit_cell_corner_size))
     cell_thickness_var = StringVar(value=str(unit_cell_thickness_view))
@@ -1062,6 +1063,7 @@ def launch_lattice_viewer():
     view_bc = None
     export_button = None
     delete_button = None
+    scheme_menu = None
     export_window_ref = {'window': None}
     model_states = {}
     current_model = {'name': ''}
@@ -1069,6 +1071,12 @@ def launch_lattice_viewer():
     last_export_settings = {
         'output_dir': output_dir,
         'dpi': dpi
+    }
+    color_scheme_map = {
+        'Pastel': 'lightblue palecyan palegreen paleyellow lightorange lightpink',
+        'Rainbow': 'rainbow',
+        'Warm': 'red orange yellow lightorange lightpink magenta',
+        'Cool': 'blue cyan lightblue palecyan',
     }
 
     def browse_input_file():
@@ -1107,6 +1115,7 @@ def launch_lattice_viewer():
             'show_grid': bool(show_grid_var.get()),
             'wrap_atoms': bool(wrap_atoms_var.get()),
             'show_model': bool(show_model_var.get()),
+            'color_scheme': color_scheme_var.get(),
         }
 
     def apply_display_options(*_args):
@@ -1124,9 +1133,14 @@ def launch_lattice_viewer():
         
         try:
             if color_asu_var.get():
-                color_by_operator(model)
+                palette = color_scheme_map.get(color_scheme_var.get(), color_scheme_map['Pastel'])
+                color_by_operator(model, spectrum=palette)
+                if scheme_menu:
+                    scheme_menu.configure(state=NORMAL)
             else:
                 cmd.color(color='gray50', selection=f'{model}_lattice*_model*')
+                if scheme_menu:
+                    scheme_menu.configure(state=DISABLED)
         except Exception as e:
             print(f"[pymol_lattice_viewer] Error setting colors: {e}")
 
@@ -1206,6 +1220,8 @@ def launch_lattice_viewer():
             show_grid_var.set(1 if state.get('show_grid', False) else 0)
             wrap_atoms_var.set(1 if state.get('wrap_atoms', True) else 0)
             show_model_var.set(1 if state.get('show_model', True) else 0)
+            if state.get('color_scheme') in color_scheme_map:
+                color_scheme_var.set(state.get('color_scheme'))
         update_view_buttons()
         apply_display_options()
 
@@ -1898,6 +1914,13 @@ def launch_lattice_viewer():
     color_cb.pack(side="left", padx=10)
     grid_cb.pack(side="left", padx=10)
 
+    scheme_frame = Frame(options_frame)
+    scheme_frame.pack(anchor='center', pady=5)
+    Label(scheme_frame, text="Color scheme:").pack(side="left", padx=5)
+    scheme_menu = OptionMenu(scheme_frame, color_scheme_var, *color_scheme_map.keys())
+    scheme_menu.configure(state=NORMAL if color_asu_var.get() else DISABLED)
+    scheme_menu.pack(side="left", padx=5)
+
     # Inner frame for parameters
     params_frame = Frame(options_frame)
     params_frame.pack(anchor='center', pady=5)
@@ -1914,6 +1937,7 @@ def launch_lattice_viewer():
     thickness_entry.bind('<Return>', apply_display_options)
     thickness_entry.bind('<FocusOut>', apply_display_options)
 
+    color_scheme_var.trace_add('write', lambda *_args: apply_display_options())
 
     input_entry.bind('<FocusIn>', lambda _evt: input_mode_var.set('file') or update_input_mode())
     pdb_entry.bind('<FocusIn>', lambda _evt: input_mode_var.set('pdb') or update_input_mode())
